@@ -62,6 +62,8 @@ default_asides: [asides/gravatar.html, asides/recent_posts.html, asides/stackove
 #   3rd Party Settings    #
 # ----------------------- #
 
+gravatar_email: rustamagasanov@gmail.com
+
 # Github repositories
 github_user: rustamagasanov
 github_repo_count: 4
