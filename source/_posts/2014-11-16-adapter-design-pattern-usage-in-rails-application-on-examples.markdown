@@ -82,7 +82,7 @@ anywhere in app to calculate pdf-document pages count. And we are now free to us
 
 ### 2
 
-Let's imagine that one of the core features of your application is to communicate with social networks, consider `twitter`. In different parts of your app, you want to create statuses, update statuses and perform any other interactions. Of course you will want to add twitter gem and use its functionality all over the app. But this isn't way to go, and I will explain why:
+Let's imagine that one of the core features of your application is communication with social networks, consider `twitter`. In different parts of your app, you want to create statuses, update statuses and perform any other interactions. Of course you will want to add twitter gem and use its functionality all over the app. But this isn't way to go, and I will explain why:
 
   * As your app will grow, Twitter API will also be improved, maybe version will be changed, new functionality added, etc
   * Twitter gem you are using, will, of course, also being upgraded
