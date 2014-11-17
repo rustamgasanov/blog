@@ -85,7 +85,7 @@ anywhere in app to calculate pdf-document pages count. And we are now free to us
 Let's imagine that one of the core features of your application is communication with social networks, consider `twitter`. In different parts of your app, you want to create statuses, update statuses and perform any other interactions. Of course you will want to add twitter gem and use its functionality all over the app. But this isn't way to go, and I will explain why:
 
   * As your app will grow, Twitter API will also be improved, maybe version will be changed, new functionality added, etc
-  * Twitter gem you are using, will, of course, also being upgraded
+  * Twitter gem you are using, will, of course, also be upgraded
   
 And some day you will decide to upgrade gem version in order to gain new or improved functionality. The gem can be rewritten significantly since the day you started using it. Imagine the amount of work you will have to do, in order to upgrade for new version: check initilization, check all existing calls, rewrite tests related to different parts of your app, that are using this gem, etc. But in the same time, existing code should do the same, you are still want to create statuses/update statuses/etc and maybe add some new call to Twitter API, which was not available in previous version.
 
