@@ -166,7 +166,7 @@ We are now have all the stuff, related to interaction with gem(and thus with Twi
 
 ### Conclusion
 
-Using adapter design pattern in rails app makes your life, as a developer, easier. Particularly, you obtain following benefits:
+Adapter design pattern usage in rails app makes your life, as a developer, easier. Particularly, you obtain following benefits:
 
   * Maintainable code
   * Encapsulated logic
