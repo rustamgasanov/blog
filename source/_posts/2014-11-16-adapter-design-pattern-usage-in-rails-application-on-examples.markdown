@@ -17,13 +17,13 @@ In Rails framework, you can find this design pattern is being used a lot. Partic
 
 #### Examples.
 
-Ok, lets move on to practical cases and code examples.
+Ok, let's move on to practical cases and code examples.
 <!-- more -->
 So, as you understand, it is a good idea to write adapters if we don't want to depend on particular implementation of some functionality(no matter in which entity this functionality is being wrapped: gem, standalone script, etc).
 
 #### 1
 
-Say, you want to calculate pages count in pdf file, and you read about simpliest solution: to use `prawn` gem. Lets implement autonomous service that we will use in application:
+Say, you want to calculate pages count in pdf file, and you read about simpliest solution: to use `prawn` gem. Let's implement autonomous service that we will use in application:
 
 
 ``` ruby app/services/pdf_generation/document.rb
@@ -82,7 +82,7 @@ anywhere in app to calculate pdf-document pages count. And we are now free to us
 
 ### 2
 
-Lets imagine that one of the core features of your application is to communicate with social networks, consider `twitter`. In different parts of your app, you want to create statuses, update statuses and perform any other interactions. Of course you will want to add twitter gem and use its functionality all over the app. But this isn't way to go, and I will explain why:
+Let's imagine that one of the core features of your application is to communicate with social networks, consider `twitter`. In different parts of your app, you want to create statuses, update statuses and perform any other interactions. Of course you will want to add twitter gem and use its functionality all over the app. But this isn't way to go, and I will explain why:
 
   * As your app will grow, Twitter API will also be improved, maybe version will be changed, new functionality added, etc
   * Twitter gem you are using, will, of course, also being upgraded
