@@ -162,7 +162,7 @@ Now, having this implemented, in application we can use
 @service.tweet_create(content, options)
 ```
 
-We are now have all the stuff, related to interaction with gem(and thus with Twitter API) in single place. It is now easy to add new methods or to upgrade a gem version, since all we will have to do is to add new adapter. All the calls in app to service will remain the same.
+We are now have all the stuff, related to interaction with gem(and thus with Twitter API) in one place. It is now easy to add new methods or to upgrade a gem version, since all we will have to do is to add new adapter. All the calls in app to service will remain the same.
 
 ### Conclusion
 
