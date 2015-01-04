@@ -225,3 +225,4 @@ and then save the rules to special file, for `IPv4` and `IPv6` correspondingly:
 Useful links:<br/>
 [Ubuntu documentation: IptablesHowTo](https://help.ubuntu.com/community/IptablesHowTo)<br/>
 [Ubuntu forum: iptables howto/tips](http://ubuntuforums.org/showthread.php?t=159661)<br/>
+[25 most used rules](http://www.thegeekstuff.com/scripts/iptables-rules)<br/>
