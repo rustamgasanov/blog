@@ -5,6 +5,7 @@
 .pygments-cache
 *.swp
 _deploy
+_config.yml
 public
 sass.old
 source.old
