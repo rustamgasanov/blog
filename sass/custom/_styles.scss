@@ -1,2 +1,9 @@
 // This File is imported last, and will override other styles in the cascade
 // Add styles here to make changes without digging in too much
+
+aside.sidebar img.sidebar-img-no-border {
+  box-shadow: none;
+  border-radius: 0;
+  border: none;
+  padding: 0.3em;
+}
