@@ -19,7 +19,7 @@ date_format: "ordinal"
 subscribe_rss: /atom.xml
 subscribe_email:
 # RSS feeds can list your email address if you like
-email:
+email: rustamagasanov@gmail.com
 
 # ----------------------- #
 #    Jekyll & Plugins     #
@@ -31,8 +31,6 @@ permalink: /blog/:year/:month/:day/:title/
 source: source
 destination: public
 plugins: plugins
-gems:
-  - jekyll-sitemap
 code_dir: downloads/code
 category_dir: blog/categories
 markdown: rdiscount
