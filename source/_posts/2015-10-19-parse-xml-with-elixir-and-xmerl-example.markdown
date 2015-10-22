@@ -96,6 +96,6 @@ end
 
 [Record](http://elixir-lang.org/docs/v1.0/elixir/Record.html) is required to interface with Erlang records.<br />
 Two kinds of records are used: [xmlElement](https://github.com/otphub/xmerl/blob/master/include/xmerl.hrl#L74) and [xmlText](https://github.com/otphub/xmerl/blob/master/include/xmerl.hrl#L90).<br />
-[:xmerl_scan.string](http://www.erlang.org/doc/man/xmerl_scan.html#string-1) - Parse string containing an XML document.<br />
+[:xmerl_scan.string](http://www.erlang.org/doc/man/xmerl_scan.html#string-1) - Parses string containing an XML document.<br />
 [:xmerl_xpath.string](http://www.erlang.org/doc/man/xmerl_xpath.html#string-2) - Extracts the nodes from the parsed XML tree according to XPath.
 
