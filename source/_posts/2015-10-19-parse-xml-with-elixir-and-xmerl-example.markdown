@@ -12,7 +12,7 @@ categories:
   - example
 ---
 
-Here I want to share a little snippet which explains how to use [Xmerl](http://www.erlang.org/doc/man/xmerl.html) library to parse XML in Elixir project with explanation.
+Here I want to share a little snippet which explains how to use [Xmerl](http://www.erlang.org/doc/man/xmerl.html) library to parse XML in Elixir project.
 <!-- more -->
 
 ``` xml simple.xml
