@@ -2,7 +2,6 @@ source "https://rubygems.org"
 
 group :development do
   gem 'rake', '~> 10.0'
-  gem 'pygments.rb'
   gem 'jekyll', '~> 2.0'
   gem 'octopress-hooks', '~> 2.2'
   gem 'octopress-date-format', '~> 2.0'
