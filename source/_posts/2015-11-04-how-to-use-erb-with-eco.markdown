@@ -12,7 +12,29 @@ categories:
   - templates
 ---
 
-In my current project we use Rails with Backbone(Marionette). For Rails, it's essential to use `erb`. For Backbone, we use `jst.eco`. Everything works fine unless you need Ruby helpers in javascript templates. Here I'll show how we can combine the power of `erb` and `jst.eco`.
+In my current project we use Rails with Backbone(Marionette). For Rails, it's essential to use `.erb`. For Backbone, we use `.jst.eco`. Everything works fine unless you need Ruby helpers(`asset_url`/`asset_path` for example) in JavaScript templates. Here I'll show how to combine the power of `erb` and `eco` template engines.
 
+<!-- more -->
 
-asset_url/asset_path
+Say, you need to put a link to compiled asset in your JavaScript template.
+
+#### Solution 1
+
+Add `.erb` to your `.js(.coffee)` Marionette View object and generate `asset_url` in `templateHelpers`, then use generated url in the template:
+
+``` coffeescript new_view.js.coffee.erb
+class New.Api extends Marionette.ItemView
+  ...
+  templateHelpers: ->
+    apiUrl: "<%= asset_url('API_Documentation_v1.0.pdf') %>"
+  ...
+```
+
+``` html api.jst.eco
+...
+<div>
+  <p><a href="<%= @apiUrl %>">Link to API.</a></p>
+</div>
+...
+```
+
