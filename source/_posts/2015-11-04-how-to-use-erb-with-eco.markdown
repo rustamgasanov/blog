@@ -31,10 +31,27 @@ class New.Api extends Marionette.ItemView
 ```
 
 ``` html api.jst.eco
-...
 <div>
-  <p><a href="<%= @apiUrl %>">Link to API.</a></p>
+  <p><%= @apiUrl %></p>
 </div>
-...
+```
+
+#### Solution 2
+
+Add `.erb` to your `.jst.eco` JavaScript template, so the file will be parsed by `erb` engine first, then by `eco` engine. The only issue, that'll appear with this approach is that both engines have the same syntax: `<%= %>`, `<%- %>` etc. But the solution is quite simple. `erb` parses `<%%= %>` to `<%= %>`. So we can easily use `<%% %>` for `eco` and `<% %>` for `erb`, here is the example:
+
+``` coffeescript new_view.js.coffee
+class New.Api extends Marionette.ItemView
+  ...
+  templateHelpers: ->
+    jsVar: "jsVar"
+  ...
+```
+
+``` html api.jst.eco.erb
+<div>
+  <p>JS:  <%%= @jsVar %></p>
+  <p>ERB: <%= asset_url('API_Documentation_v1.0.pdf') %></p>
+</div>
 ```
 
