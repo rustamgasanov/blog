@@ -14,3 +14,11 @@ categories:
   - registry
   - ci
 ---
+
+In this series I am going to show and describe the proccess of setting up docker registry, continious integration, dockerization and deployment of your application(s).
+
+The first step is to setup `Docker Registry` as a storage of our images and `Jenkins` for future builds and dockerization.
+
+<!-- more -->
+
+
