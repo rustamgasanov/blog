@@ -21,4 +21,13 @@ In this tutorial I'll show how to create a `docker` image with your Rails applic
 
 <!-- more -->
 
-Usually nowadays you would have more than one Ruby-application in your stack, so in order to have a base image for them, let's begin with creation of `baseimage` for 
+### Base image creation
+
+Usually nowadays you would have more than one Ruby-application(micro-service) in your apps stack, so I'll begin with creation of the base image for them. Let's call it `myproject-baseimage`. I picked <a href="https://hub.docker.com/r/phusion/baseimage/" target="_blank">phusion/baseimage:0.9.18</a> as a base and of course we want to have `ruby 2.3` and `bundler` out of the box.
+
+```
+$ mkdir myproject-baseimage
+$ cd myproject-baseimage
+```
+
+Start with 
