@@ -26,9 +26,9 @@ module Jekyll
       image_src = "http://www.gravatar.com/avatar/#{gravatar_hash}"
 
       # append size query to URL if provided in tag
-      unless @size.empty?
-        image_src = image_src+"?s=#{@size}"
-      end
+      # unless @size.empty?
+      image_src = image_src+"?s=500"
+      # end
 
       # output the full Gravatar URL
       image_src
