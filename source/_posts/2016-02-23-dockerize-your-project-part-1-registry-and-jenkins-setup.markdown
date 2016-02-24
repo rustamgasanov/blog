@@ -15,7 +15,7 @@ categories:
   - ci
 ---
 
-In this series I am going to show and describe the proccess of setting up docker registry, continious integration, dockerization and deployment of your application(s).
+In this series of articles I am going to show and describe how to dockerize your application(s) and services, and how to setup continious integration and dockerization with Jenkins.
 
 The first step is to setup `Docker Registry` as a storage of our images and `Jenkins` for future builds and dockerization.
 
@@ -24,9 +24,9 @@ The first step is to setup `Docker Registry` as a storage of our images and `Jen
 Since these two services are independent of our application(s) I prefer to keep them on separate server. As an OS I will use `Ubuntu 14.04.4`.
 In order to begin, you need `docker` and `docker-compose` to be installed. I won't repeat official guides, you can find detailed instructions here: <a href="https://docs.docker.com/engine/installation/linux/ubuntulinux/" target="_blank">docker</a>, <a href="https://docs.docker.com/compose/install/" target="_blank">docker-compose</a>.
 
-### Setup project skeleton
+### Project skeleton
 
-Create a folder for the `docker-compose` project in the home directory(`~` or whenever you want), I would call it `myproject-services`, then `cd` to it:
+After installation is done, create a folder for the `docker-compose` project in the home directory(`~` or whenever you want), I would call it `myproject-services`, then `cd` to it:
 
 ```
 $ mkdir myproject-services
@@ -71,7 +71,7 @@ jenkins:
 
 Here we set `nginx` container to expose ports `80`(HTTP) and `443`(HTTPS), and linking it with `registry` and `jenkins`(in short words it allows `nginx` container to access them, <a href="https://docs.docker.com/engine/userguide/networking/default_network/dockerlinks/" target="_blank">more about docker links</a>), other instructions are pretty self-explanatory. 
 
-As a security measures, we are going to setup [`HTTP Basic Auth`](https://en.wikipedia.org/wiki/Basic_access_authentication) and `SSL` for both services(<a href="https://docs.docker.com/registry/deploying/#running-a-domain-registry" target="_blank">which is required for registry</a>).
+As a security measures, we are going to setup [`HTTP Basic Auth`](https://en.wikipedia.org/wiki/Basic_access_authentication) and `SSL` for both services(<a href="https://docs.docker.com/registry/deploying/#running-a-domain-registry" target="_blank">it's required for registry</a>).
 
 ### Prepare HTTP Basic Auth
 
