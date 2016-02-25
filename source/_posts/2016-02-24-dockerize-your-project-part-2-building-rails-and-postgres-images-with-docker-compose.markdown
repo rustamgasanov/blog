@@ -104,7 +104,7 @@ Also, you can list the tags for this image via `https://registry.myproject.com/v
 
 > {"name":"myproject/baseimage","tags":["latest"]}
 
-Since during the build we didn't tag it with any specific version, by default `docker` sets the tag `latest`. Now we can use this image to dockerize our Ruby apps.
+Since during the build we didn't tag it with any specific version, by default `docker` sets the version `latest`. Now we can use this image to dockerize our Ruby apps.
 
 ### Rails application dockerization
 
