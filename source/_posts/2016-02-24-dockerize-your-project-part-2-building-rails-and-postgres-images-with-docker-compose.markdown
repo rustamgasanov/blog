@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Dockerize Your Project. Part 2: Building Rails and Postgres images with docker-compose."
+title: "Dockerize Your Project. Part 2: Building Rails and Postgres images."
 date: 2016-02-24 20:46:41 +0100
 comments: true
 categories: 
