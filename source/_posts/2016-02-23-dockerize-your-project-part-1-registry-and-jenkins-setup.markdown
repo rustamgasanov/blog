@@ -287,6 +287,7 @@ What you now probably want to do and what I left behind the scene:
 * add this project to `git`, ignoring artifacts(certs), but keeping empty folders(`data_jenkins`, `data_registry`)
 * add cron job for automated ssl certs renewal(letsencrypt generates certs valid for 3 months)
 * add monitoring tools
+* add backup system
 * add any kind of automatization for the host initial setup(`docker`, `docker-compose`, cron, monitoring, etc) using `chef`, `puppet` or anything else
 
 ### Useful links:
