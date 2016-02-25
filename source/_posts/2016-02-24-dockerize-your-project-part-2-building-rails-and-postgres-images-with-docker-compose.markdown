@@ -224,7 +224,7 @@ Great, we've just created the first dockerized release of our Rails application!
 
 ### Getting everything up and running
 
-Since we need to start more than one container, let's create `docker-compose` project. I'll call it `myproject-testenv`. There is <a href="https://hub.docker.com/_/postgres/" target="_blank">an official `postgres` image</a> in `docker hub` so let's pick it. We would also need a directory to store `postgres` data:
+Since we need to start more than one container, let's create `docker-compose` project. I'll call it `myproject-testenv`. There is <a href="https://hub.docker.com/_/postgres/" target="_blank">an official postgres image</a> in `docker hub` so let's pick it. We would also need a directory to store `postgres` data:
 
 ```
 $ mkdir myproject-testenv
