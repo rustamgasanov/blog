@@ -33,7 +33,7 @@ $ cd myproject-baseimage
 
 I picked <a href="https://hub.docker.com/r/phusion/baseimage/" target="_blank">phusion/baseimage:0.9.18</a> as a base for our new image because it's ligthweight and `ubuntu` inside is prepared to run as a `docker` container. We are going to add `ruby 2.3`, `bundler` and js-runtime(`nodejs`) to it. 
 
-Open your favorite redactor and create the `Dockerfile` with the following content:
+Open your favorite text editor and create the `Dockerfile` with the following content:
 
 ```
 $ cat Dockerfile
