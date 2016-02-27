@@ -41,7 +41,7 @@ $ mkdir data_registry
 $ mkdir data_jenkins
 ```
 
-Using any redactor, create `docker-compose.yml` file with the following instructions:
+Using any text editor, create `docker-compose.yml` file with the following instructions:
 
 ```
 $ cat docker-compose.yml
