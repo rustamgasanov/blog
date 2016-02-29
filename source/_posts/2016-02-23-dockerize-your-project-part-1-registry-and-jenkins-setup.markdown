@@ -62,7 +62,7 @@ registry:
   volumes:
     - ./data_registry:/registry_data
 jenkins:
-  image: "jenkins:1.565.3"
+  image: "jenkins:1.642.2"
   ports:
     - 50000:50000
   volumes:
