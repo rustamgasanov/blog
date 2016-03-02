@@ -15,7 +15,7 @@ categories:
   - ci
 ---
 
-In <a href="http://rustamagasanov.com/blog/2016/02/23/dockerize-your-project-part-1-registry-and-jenkins-setup/" target="_blank">the first part</a> of this series we've set up `jenkins` and private `docker registry`. Then, in <a href="http://rustamagasanov.com/blog/2016/02/23/http://rustamagasanov.com/blog/2016/02/24/dockerize-your-project-part-2-building-rails-and-postgres-images-with-docker-compose/" target="_blank">part 2</a> we've created a build configuration and dockerized the `Rails` application manually. Of course we don't want to do this by hand everytime the code in the main branch of the project changes, so the time has come to configure `jenkins` for automated builds and dockerization.
+In <a href="http://rustamagasanov.com/blog/2016/02/23/dockerize-your-project-part-1-registry-and-jenkins-setup/" target="_blank">the first part</a> of this series we've set up `jenkins` and private `docker registry`. Then, in <a href="http://rustamagasanov.com/blog/2016/02/23/http://rustamagasanov.com/blog/2016/02/24/dockerize-your-project-part-2-building-rails-and-postgres-images-with-docker-compose/" target="_blank">part 2</a> we've created a build configuration and dockerized the `Rails` application manually. Of course we don't want to do this by hand every time the code changes, so the time has come to configure `jenkins` for automated builds and dockerization.
 
 <!-- more -->
 
@@ -49,7 +49,7 @@ RUN apt-get -qy install dpkg-dev debian-keyring
 # ruby2.3 package dependencies
 RUN apt-get -qy install dpkg-dev autotools-dev bison chrpath debhelper dh-autoreconf file libffi-dev libgdbm-dev libgmp-dev libncurses5-dev libncursesw5-dev libreadline6-dev libssl-dev libyaml-dev ruby ruby-interpreter  rubygems-integration systemtap-sdt-dev tcl8.5-dev tk8.5-dev
 
-# dbs/runtime dependencies
+# db libs/js runtime
 RUN apt-get -qy install libpq-dev libsqlite3-dev nodejs
 
 # docker
@@ -71,9 +71,15 @@ USER jenkins
 ENTRYPOINT ["/bin/tini", "--", "/usr/local/bin/jenkins.sh"]
 ```
 
-Packages installation is pretty straightforward, the tricky part starts from the `docker`. The `RUN` steps are just copied <a href="https://docs.docker.com/engine/installation/linux/debian/" target="_blank">from the official page</a> for `Debian Jessie`. But, as you can, see we don't run it as a daemon anywhere. The good explanation why you don't want to run docker inside another docker(dind) container, expecially for CI, you can find in this post by Jérôme Petazzoni: <a href="http://jpetazzo.github.io/2015/09/03/do-not-use-docker-in-docker-for-ci/" target="_blank">Using Docker-in-Docker for your CI or testing environment? Think twice.</a>. Instead, we would share `docker.sock` and `bin/docker` between the host and `jenkins` container.
+Packages installation is pretty straightforward, the tricky part starts from the `docker`. The `RUN` steps are just copied <a href="https://docs.docker.com/engine/installation/linux/debian/" target="_blank">from the official page</a> for `Debian Jessie`. But, as you can see, we don't run it as a daemon anywhere. The good explanation why you don't want to run docker inside another docker(dind) container, especially for CI, you can find in this post by Jérôme Petazzoni: <a href="http://jpetazzo.github.io/2015/09/03/do-not-use-docker-in-docker-for-ci/" target="_blank">Using Docker-in-Docker for your CI or testing environment? Think twice.</a> Instead, we would share `docker.sock` and `bin/docker` between the host and `jenkins` container.
 
-After the `docker` setup, I execute 3 simple scripts: `build/ruby-install.sh`, `build/gems-install.sh` and `build/change-permissions.sh`:
+After the `docker` setup, I execute 3 simple scripts:
+
+* `build/ruby-install.sh`
+* `build/gems-install.sh`
+* `build/change-permissions.sh`
+
+Here they are:
 
 ```
 $ cat build/ruby-install.sh
@@ -105,3 +111,7 @@ $ cat build/change-permissions.sh
 
 chown jenkins:jenkins /opt/rubies -R
 ```
+
+* `ruby-install.sh` installs `ruby2.3` with a help of `ruby-install` tool, then links `ruby` and `gem` executables to `/usr/bin`
+* `gems-install.sh` installs `bundler`
+* `change-permissions.sh` sets `jenkins` user as owner of the `/opt/rubies`(since `jenkins` user performs builds)
