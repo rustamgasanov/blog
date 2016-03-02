@@ -120,7 +120,7 @@ Initialize the `Dockerfile` inside with the following content:
 
 ```
 $ cat Dockerfile
-FROM myproject/baseimage:latest
+FROM registry.myproject.com/myproject/baseimage:latest
 
 ADD app /app
 ADD scripts/ /
