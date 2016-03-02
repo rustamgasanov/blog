@@ -115,3 +115,16 @@ chown jenkins:jenkins /opt/rubies -R
 * `ruby-install.sh` installs `ruby2.3` with a help of `ruby-install` tool, then links `ruby` and `gem` executables to `/usr/bin`
 * `gems-install.sh` installs `bundler`
 * `change-permissions.sh` sets `jenkins` user as owner of the `/opt/rubies`(since `jenkins` user performs builds)
+
+Final structure of the `myproject-jenkins`:
+
+{% img /images/dockerization_jenkins_structure.png %}
+
+Now we can build this image and push it to the registry:
+
+```
+$ docker build -t myproject/myproject-jenkins .
+$ docker run -it myproject/myproject-jenkins bash
+$ docker tag myproject/myproject-jenkins registry.myproject.com/myproject/myproject-jenkins
+$ docker push registry.myproject.com/myproject/myproject-jenkins
+```
