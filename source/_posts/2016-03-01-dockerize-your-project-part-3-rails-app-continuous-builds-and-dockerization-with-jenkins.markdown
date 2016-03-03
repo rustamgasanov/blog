@@ -27,7 +27,7 @@ In order to build and dockerize Rails application we would need slighly more too
 * js runtime
 * docker
 
-So first of all we need an image with everything above on top of the Jenkins official image. Let's create it.
+So, first of all, we need an image with everything above on top of the Jenkins official image. Let's create it.
 
 ### Building Jenkins image with Ruby inside
 
