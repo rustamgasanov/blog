@@ -203,7 +203,6 @@ Add a new build, I would call it `myproject-app1`.
 
 ```
 bundle install --binstubs
-bin/rake db:migrate
 bin/rake spec
 ```
 
