@@ -73,7 +73,7 @@ USER jenkins
 ENTRYPOINT ["/bin/tini", "--", "/usr/local/bin/jenkins.sh"]
 ```
 
-Packages installation is pretty straightforward, the tricky part starts from the docker setup part. The `RUN` steps are just copied <a href="https://docs.docker.com/engine/installation/linux/debian/" target="_blank">from the official page</a> for Debian Jessie. But, as you can see, we don't run it as a daemon anywhere. The good explanation why you don't want to run docker inside another docker(dind) container, especially for CI, you can find in this post by Jérôme Petazzoni: <a href="http://jpetazzo.github.io/2015/09/03/do-not-use-docker-in-docker-for-ci/" target="_blank">Using Docker-in-Docker for your CI or testing environment? Think twice.</a> Instead, we would share `docker.sock` and `bin/docker` between the host and jenkins container.
+Packages installation is pretty straightforward, the tricky part starts from the docker setup. The `RUN` steps are just copied <a href="https://docs.docker.com/engine/installation/linux/debian/" target="_blank">from the official page</a> for Debian Jessie. But, as you can see, we don't run it as a daemon anywhere. The good explanation why you don't want to run docker inside another docker(dind) container, especially for CI, you can find in this post by Jérôme Petazzoni: <a href="http://jpetazzo.github.io/2015/09/03/do-not-use-docker-in-docker-for-ci/" target="_blank">Using Docker-in-Docker for your CI or testing environment? Think twice.</a> Instead, we would share `docker.sock` and `bin/docker` between the host and jenkins container.
 
 After the docker setup, I execute 3 simple scripts:
 
