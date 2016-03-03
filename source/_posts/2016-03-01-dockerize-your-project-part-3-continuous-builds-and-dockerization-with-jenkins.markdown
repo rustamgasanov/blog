@@ -29,6 +29,8 @@ In order to build and dockerize `Ruby`(`Rails`) application we would need slighl
 
 So first of all we need an image with everything above on top of `jenkins` official image. Let's create it.
 
+### Building Jenkins image with Ruby inside
+
 Create a new project directory, I would call it `myproject-jenkins`, cd to it:
 
 ```
@@ -101,6 +103,7 @@ $ cat build/gems-install.sh
 #!/bin/bash
 
 gem install rake bundler --no-rdoc --no-ri
+
 ln -nfs /opt/rubies/ruby-2.3.0/bin/bundle /usr/bin/bundle
 ln -nfs /opt/rubies/ruby-2.3.0/bin/bundler /usr/bin/bundler
 ```
@@ -112,7 +115,7 @@ $ cat build/change-permissions.sh
 chown jenkins:jenkins /opt/rubies -R
 ```
 
-* `ruby-install.sh` installs `ruby2.3` with a help of `ruby-install` tool, then links `ruby` and `gem` executables to `/usr/bin`
+* `ruby-install.sh` installs `ruby2.3` with a help of `ruby-install` tool
 * `gems-install.sh` installs `bundler`
 * `change-permissions.sh` sets `jenkins` user as owner of the `/opt/rubies`(since `jenkins` user performs builds)
 
@@ -128,3 +131,133 @@ $ docker run -it myproject/myproject-jenkins bash
 $ docker tag myproject/myproject-jenkins registry.myproject.com/myproject/myproject-jenkins
 $ docker push registry.myproject.com/myproject/myproject-jenkins
 ```
+
+### Launch
+
+Replace standard `jenkins` in your `myproject-services` instance we created in <a href="http://rustamagasanov.com/blog/2016/02/23/dockerize-your-project-part-1-registry-and-jenkins-setup/" target="_blank">part 1</a>. The `Rails` application also uses `postgres`, so we need it to run specs. Eventually `docker-compose.yml` file should look like this:
+
+```
+nginx:
+  image: "nginx:1.9"
+  ports:
+    - 80:80
+    - 443:443
+  links:
+    - registry:registry
+    - jenkins:jenkins
+  volumes:
+    - ./data_nginx/:/etc/nginx/conf.d:ro
+registry:
+  image: registry:2
+  environment:
+    REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY: /registry_data
+  volumes:
+    - ./data_registry:/registry_data
+jenkins:
+  image: registry.myproject.com/myproject/myproject-jenkins:latest
+  ports:
+    - 50000:50000
+  links:
+    - postgresql:postgresql
+  volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+    - /usr/bin/docker:/bin/docker
+    - ./data_jenkins:/var/jenkins_home
+postgresql:
+  image: postgres:9.5
+  environment:
+    POSTGRES_USER: "pguser"
+    POSTGRES_PASSWORD: "pgpass"
+    POSTGRES_DB: "myproject_test"
+  ports:
+    - 5432:5432
+```
+
+Execute `docker-compose up -d` to start this stack.
+
+### Configuring
+
+#### Plugins setup
+
+I usually use 2 plugins with Jenkins:
+
+* <a href="https://wiki.jenkins-ci.org/display/JENKINS/Git+Plugin" target="_blank">Git Plugin</a> to fetch git repositories
+* <a href="https://wiki.jenkins-ci.org/display/JENKINS/EnvInject+Plugin" target="_blank">EnvInject Plugin</a> to use custom environment variables in build instructions
+
+You can either download them manually and put into `data_jenkins/plugins` folder(don't forget about dependencies) or install it from Jenkins web-interface: `https://ci.myproject.com/pluginManager/available`
+
+We would have 2 builds for the app:
+
+1. First ensures that specs are passing and production requirements are met
+2. Second creates an image ready for production and put it into registry
+
+#### Application build
+
+Add a new build, I would call it `myproject-app1`.
+
+* Check `Prepare an environment to run` -> `Keep Jenkins Environment Variables` and `Keep Jenkins Build Variables`
+* In `Source Code Management` check `Git`, add your repository url and credentials(you can generate ssh-key using `ssh-keygen -t rsa -C "jenkins"` and put it in `data_jenkins/.ssh` folder)<br>
+* In `Build Triggers` check `Poll SCM`, every 5 minutes: `H/5 * * * *`<br>
+* In `Build Environment` section check `Inject environment variables to the build process` and in `Properties Content` put `DATABASE_URL=postgresql://pguser:pgpass@postgresql/myproject_test`<br>
+* In `Build` section add `Execute Shell` with a following content:
+
+```
+bundle install --binstubs
+bin/rake db:migrate
+bin/rake spec
+```
+
+* And when build is successful we want to create an image with it, so in `Post-build Actions` add `Build other projects` -> `dockerize myproject-app1` (check `Trigger only if build is stable`)
+
+#### Image creation build
+
+Add downstream build for `myproject-app1`, I named it `dockerize myproject-app1`.
+
+* Check `Prepare an environment to run` -> `Keep Jenkins Environment Variables` and `Keep Jenkins Build Variables`. In `Properties Content` put:
+
+```
+APP_NAME=myproject-apps/myproject-app1
+APP_BUILD_CONFIG_DIR=myproject-app1
+APP_BRANCH=master
+```
+
+* In `Source Code Management` select `Git`, and add a path to the repository with **build configuration** we created in <a href="http://rustamagasanov.com/blog/2016/02/24/dockerize-your-project-part-2-building-rails-and-postgres-images-with-docker-compose/" targe="_blank">part 2</a> and credentials
+* In `Build` section add `Execute Shell` with a following content:
+
+```
+cd $APP_BUILD_CONFIG_DIR
+rm -rf app
+git clone git@gitlab.myproject.com:$APP_NAME.git -b $APP_BRANCH --single-branch app
+
+cd app
+APP_REVISION=$(git rev-parse HEAD)
+
+cd ..
+
+docker build -t $APP_NAME:$APP_REVISION .
+docker tag $APP_NAME:$APP_REVISION $APP_NAME:latest
+docker tag $APP_NAME:$APP_REVISION registry.myproject.com/$APP_NAME
+docker tag $APP_NAME:$APP_REVISION registry.myproject.com/$APP_NAME:$APP_REVISION
+docker push registry.myproject.com/$APP_NAME
+docker push registry.myproject.com/$APP_NAME:$APP_REVISION
+docker rmi registry.myproject.com/$APP_NAME:$APP_REVISION
+```
+
+#### One more step
+
+Since our private registry is protected with HTTP Basic Auth, we need to login Jenkins. To do this, enter the container with
+
+```
+$ docker ps 
+$ docker exec -it *container_id* bash
+```
+
+And inside the container, type
+
+```
+$ docker login -e "jenkins@myproject.com" -u "username" -p "password" registry.myproject.com
+```
+
+It will create `config.json` file in `data_jenkins/.docker/` directory with authentication details.
+
+Now you can leave the box, everything is ready for your first automated build!
