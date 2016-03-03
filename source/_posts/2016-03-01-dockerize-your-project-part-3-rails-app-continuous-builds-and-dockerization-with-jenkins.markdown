@@ -260,4 +260,4 @@ $ docker login -e "jenkins@myproject.com" -u "username" -p "password" registry.m
 
 It will create `config.json` file in `data_jenkins/.docker/` directory with authentication details.
 
-Now you can leave the box, everything is ready for your first automated build!
+That's it. Now you can leave the container and start the first build!
