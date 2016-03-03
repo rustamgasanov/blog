@@ -15,11 +15,11 @@ categories:
   - ci
 ---
 
-In <a href="http://rustamagasanov.com/blog/2016/02/23/dockerize-your-project-part-1-registry-and-jenkins-setup/" target="_blank">the first part</a> of this series we've set up `jenkins` and private `docker registry`. Then, in <a href="http://rustamagasanov.com/blog/2016/02/23/http://rustamagasanov.com/blog/2016/02/24/dockerize-your-project-part-2-building-rails-and-postgres-images-with-docker-compose/" target="_blank">part 2</a> we've created a build configuration and dockerized the `Rails` application manually. Of course we don't want to do this by hand every time the code changes, so the time has come to configure `jenkins` for automated builds and dockerization.
+In <a href="http://rustamagasanov.com/blog/2016/02/23/dockerize-your-project-part-1-registry-and-jenkins-setup/" target="_blank">the first part</a> of this series we've set up Jenkins and private docker registry. Then, in <a href="http://rustamagasanov.com/blog/2016/02/23/http://rustamagasanov.com/blog/2016/02/24/dockerize-your-project-part-2-building-rails-and-postgres-images-with-docker-compose/" target="_blank">part 2</a> we've created a build configuration and dockerized the Rails application manually. Of course we don't want to do this by hand every time the code changes, so the time has come to configure Jenkins for automated builds and dockerization.
 
 <!-- more -->
 
-In order to build and dockerize `Ruby`(`Rails`) application we would need slighly more tools than official `jenkins` image provides. These tools are:
+In order to build and dockerize Rails application we would need slighly more tools than official Jenkins image provides. These tools are:
 
 * ruby
 * bundler
@@ -27,7 +27,7 @@ In order to build and dockerize `Ruby`(`Rails`) application we would need slighl
 * js runtime
 * docker
 
-So first of all we need an image with everything above on top of `jenkins` official image. Let's create it.
+So first of all we need an image with everything above on top of the Jenkins official image. Let's create it.
 
 ### Building Jenkins image with Ruby inside
 
@@ -73,9 +73,9 @@ USER jenkins
 ENTRYPOINT ["/bin/tini", "--", "/usr/local/bin/jenkins.sh"]
 ```
 
-Packages installation is pretty straightforward, the tricky part starts from the `docker`. The `RUN` steps are just copied <a href="https://docs.docker.com/engine/installation/linux/debian/" target="_blank">from the official page</a> for `Debian Jessie`. But, as you can see, we don't run it as a daemon anywhere. The good explanation why you don't want to run docker inside another docker(dind) container, especially for CI, you can find in this post by Jérôme Petazzoni: <a href="http://jpetazzo.github.io/2015/09/03/do-not-use-docker-in-docker-for-ci/" target="_blank">Using Docker-in-Docker for your CI or testing environment? Think twice.</a> Instead, we would share `docker.sock` and `bin/docker` between the host and `jenkins` container.
+Packages installation is pretty straightforward, the tricky part starts from the docker setup part. The `RUN` steps are just copied <a href="https://docs.docker.com/engine/installation/linux/debian/" target="_blank">from the official page</a> for Debian Jessie. But, as you can see, we don't run it as a daemon anywhere. The good explanation why you don't want to run docker inside another docker(dind) container, especially for CI, you can find in this post by Jérôme Petazzoni: <a href="http://jpetazzo.github.io/2015/09/03/do-not-use-docker-in-docker-for-ci/" target="_blank">Using Docker-in-Docker for your CI or testing environment? Think twice.</a> Instead, we would share `docker.sock` and `bin/docker` between the host and jenkins container.
 
-After the `docker` setup, I execute 3 simple scripts:
+After the docker setup, I execute 3 simple scripts:
 
 * `build/ruby-install.sh`
 * `build/gems-install.sh`
@@ -134,7 +134,7 @@ $ docker push registry.myproject.com/myproject/myproject-jenkins
 
 ### Launch
 
-Replace standard `jenkins` in your `myproject-services` instance we created in <a href="http://rustamagasanov.com/blog/2016/02/23/dockerize-your-project-part-1-registry-and-jenkins-setup/" target="_blank">part 1</a>. The `Rails` application also uses `postgres`, so we need it to run specs. Eventually `docker-compose.yml` file should look like this:
+Replace standard `jenkins` in your `myproject-services` project, that we created in <a href="http://rustamagasanov.com/blog/2016/02/23/dockerize-your-project-part-1-registry-and-jenkins-setup/" target="_blank">part 1</a>. The Rails application also uses postgres, so we need it as well to run specs. Eventually `docker-compose.yml` file should look like this:
 
 ```
 nginx:
