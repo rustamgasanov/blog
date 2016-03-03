@@ -136,7 +136,7 @@ $ docker push registry.myproject.com/myproject/myproject-jenkins
 
 Replace standard `jenkins` in your `myproject-services` project, that we created in <a href="http://rustamagasanov.com/blog/2016/02/23/dockerize-your-project-part-1-registry-and-jenkins-setup/" target="_blank">part 1</a>. The Rails application also uses postgres, so we need it as well to run specs. Eventually `docker-compose.yml` file should look like this:
 
-```
+``` yaml
 nginx:
   image: "nginx:1.9"
   ports:
