@@ -18,7 +18,7 @@ categories:
 Previous part:
 <a href="http://rustamagasanov.com/blog/2016/02/23/dockerize-your-project-part-1-registry-and-jenkins-setup/" target="_blank">Part 1: Docker Registry and Jenkins setup with docker-compose.</a>
 
-In this tutorial I'll show how to create a `docker` image with your Rails application, push it to the private `Docker Registry`(that we set up in Part 1), and then how to run it with `postgres` database image, wrapping everything in `docker-compose.yml`.
+In this tutorial I'll show how to create a docker image with your Rails application, push it to the private docker registry(that we set up in Part 1), and then how to run it with postgres database image, wrapping everything in `docker-compose.yml`.
 
 <!-- more -->
 
@@ -31,7 +31,7 @@ $ mkdir myproject-baseimage
 $ cd myproject-baseimage
 ```
 
-I picked <a href="https://hub.docker.com/r/phusion/baseimage/" target="_blank">phusion/baseimage:0.9.18</a> as a base for our new image because it's ligthweight and `ubuntu` inside is prepared to run as a `docker` container. We are going to add `ruby 2.3`, `bundler` and js-runtime(`nodejs`) to it. 
+I picked <a href="https://hub.docker.com/r/phusion/baseimage/" target="_blank">phusion/baseimage:0.9.18</a> as a base for our new image because it's ligthweight and Ubuntu inside is prepared to run as a docker container. We are going to add `ruby 2.3`, `bundler` and js-runtime(`nodejs`) to it. 
 
 Open your favorite text editor and create the `Dockerfile` with the following content:
 
@@ -104,11 +104,11 @@ Also, you can list the tags for this image via `https://registry.myproject.com/v
 
 > {"name":"myproject/baseimage","tags":["latest"]}
 
-Since during the build we didn't tag it with any specific version, by default `docker` sets the version `latest`. Now we can use this image to dockerize our Ruby apps.
+Since during the build we didn't tag it with any specific version, by default docker sets the version `latest`. Now we can use this image to dockerize our Ruby apps.
 
 ### Rails application dockerization
 
-Create a new project, I would call it `myproject-buildconfigs`, which will contain the `docker` build instructions for the apps(and will be used by Jenkins in the future). Then create a directory for our first Rails app inside:
+Create a new project, I would call it `myproject-buildconfigs`, which will contain the docker build instructions for the apps(and will be used by Jenkins in the future). Then create a directory for our first Rails app inside:
 
 ```
 $ mkdir myproject-buildconfigs
@@ -207,7 +207,7 @@ Final structure:
 {% img /images/dockerization_app_build_structure.png %}
 
 
-In the next part I'll describe how to use this build configuration with `Jenkins` to automatically dockerize new releases, for now let's try to build it manually and understand the process. Clone your project into app directory, start the build and push it to the registry:
+In the next part I'll describe how to use this build configuration with Jenkins to automatically dockerize new releases, for now let's try to build it manually and understand the process. Clone your project into app directory, start the build and push it to the registry:
 
 ```
 $ git clone *repo* -b *branch* --single-branch app
@@ -224,7 +224,7 @@ Great, we've just created the first dockerized release of our Rails application!
 
 ### Getting everything up and running
 
-Since we need to start more than one container, let's create `docker-compose` project. I'll call it `myproject-testenv`. There is <a href="https://hub.docker.com/_/postgres/" target="_blank">an official postgres image</a> in `docker hub` so let's pick it. We would also need a directory to store `postgres` data:
+Since we need to start more than one container, let's create `docker-compose` project. I'll call it `myproject-testenv`. There is <a href="https://hub.docker.com/_/postgres/" target="_blank">an official postgres image</a> in docker hub so let's pick it. We would also need a directory to store postgres data:
 
 ```
 $ mkdir myproject-testenv
@@ -257,7 +257,7 @@ postgresql:
     - 5432:5432
 ```
 
-Our unicorn starts the app on the port `3001`, so we're exposing it. `app1` will be able to discover `postgres` container with a help of linking. As environment variables we set required for Rails `SECRET_KEY_BASE` and database location with `DATABASE_URL`. For `postgres` container, we're setting username/password pair, database name and specifying the `data_pg` directory on the host machine as a volume. In the end we're exposing port 5432, so database would be available on the host.
+Our unicorn starts the app on the port `3001`, so we're exposing it. `app1` will be able to discover postgres container with a help of linking. As environment variables we set required for Rails `SECRET_KEY_BASE` and database location with `DATABASE_URL`. For postgres container, we're setting username/password pair, database name and specifying the `data_pg` directory on the host machine as a volume. In the end we're exposing port 5432, so database would be available on the host.
 
 Now we can start containers with `docker-compose up -d`. Let's check if everything is running:
 
@@ -275,7 +275,7 @@ $ curl localhost:3001
 
 ### Final notes
 
-I prefer to develop inside a `vagrant` box and it could be convinient to create a configured box with `docker` installed and ports on which apps are running exposed to the host. Then you can share this box and `myproject-testenv` with other developers. Say, you want to make changes in `myproject-app1`, the development flow should look like this:
+I prefer to develop inside a `vagrant` box and it could be convinient to create a configured box with docker installed and ports on which apps are running exposed to the host. Then you can share this box and `myproject-testenv` with other developers. Say, you want to make changes in `myproject-app1`, the development flow should look like this:
 
 1. Start all the containers inside the box with `docker-compose up -d` 
 2. Shut `myproject-app1` with `docker-compose stop myproject-app1`
