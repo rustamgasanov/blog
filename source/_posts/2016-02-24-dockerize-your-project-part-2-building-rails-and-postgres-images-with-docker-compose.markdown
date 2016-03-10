@@ -286,3 +286,5 @@ Now apps stack is running inside `vagrant` box and you should see all the change
 
 * consistent and reproducible development environment within the team
 * you don't need anything except a `git` and code redactor on your host machine
+
+You can find basic Vagrant box config running Ubuntu 14.04 with Ruby and Docker <a href="https://github.com/rustamagasanov/ruby-devenv" target="_blank">in my repository</a>.
