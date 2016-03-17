@@ -195,7 +195,7 @@ We would have 2 builds for the app:
 
 Add a new build, I would call it `myproject-app1`.
 
-* Check `Prepare an environment to run` -> `Keep Jenkins Environment Variables` and `Keep Jenkins Build Variables`
+* Check `Prepare an environment to run` → `Keep Jenkins Environment Variables` and `Keep Jenkins Build Variables`
 * In `Source Code Management` check `Git`, add your repository url and credentials(you can generate ssh-key using `ssh-keygen -t rsa -C "jenkins"` and put it in `data_jenkins/.ssh` folder)<br>
 * In `Build Triggers` check `Poll SCM`, every 5 minutes: `H/5 * * * *`<br>
 * In `Build Environment` section check `Inject environment variables to the build process` and in `Properties Content` put `DATABASE_URL=postgresql://pguser:pgpass@postgresql/myproject_test`<br>
@@ -206,13 +206,13 @@ bundle install --binstubs
 bin/rake spec
 ```
 
-* And when build is successful we want to create an image with it, so in `Post-build Actions` add `Build other projects` -> `dockerize myproject-app1` (check `Trigger only if build is stable`)
+* And when build is successful we want to create an image with it, so in `Post-build Actions` add `Build other projects` → `dockerize myproject-app1` (check `Trigger only if build is stable`)
 
 #### Image creation build
 
 Add downstream build for `myproject-app1`, I named it `dockerize myproject-app1`.
 
-* Check `Prepare an environment to run` -> `Keep Jenkins Environment Variables` and `Keep Jenkins Build Variables`. In `Properties Content` put:
+* Check `Prepare an environment to run` → `Keep Jenkins Environment Variables` and `Keep Jenkins Build Variables`. In `Properties Content` put:
 
 ```
 APP_NAME=myproject-apps/myproject-app1
