@@ -12,7 +12,19 @@ aside.sidebar img.sidebar-img-no-border {
   line-height: 12px;
 }
 
+a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, body, canvas, caption, center, cite, code, dd, del, details, dfn, dl, dt, em, embed, fieldset, figcaption, footer, form, h1, h2, h3, h4, h5, h6, header, hgroup, html, i, iframe, img, ins, kbd, label, legend, li, mark, menu, nav, object, ol, output, p, q, ruby, s, samp, section, small, strike, strong, sub, summary, sup, time, tt, u, ul, var, video {
+  font-family: "calluna", serif;
+}
+
+// `` highlighted code
+p code, li code {
+  font-family: "calluna", serif;
+}
+
 p, li {
   font-size: 22px;
   line-height: 1.6;
 }
+
+
+
