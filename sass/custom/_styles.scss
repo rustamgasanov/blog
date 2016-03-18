@@ -26,5 +26,6 @@ p, li {
   line-height: 1.6;
 }
 
-
-
+ul, ul ul, ul ol, ol, ol ul, ol ol {
+  margin-left: 1.3em;
+}
