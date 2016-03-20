@@ -29,3 +29,8 @@ p, li {
 ul, ul ul, ul ol, ol, ol ul, ol ol {
   margin-left: 1.3em;
 }
+
+body>header h1, body>header h2 {
+  width: 100%;
+  text-align: center;
+}
