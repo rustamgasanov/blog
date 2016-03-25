@@ -189,7 +189,7 @@ You can either download them manually and put into `data_jenkins/plugins` folder
 We would have 2 builds for the app:
 
 1. First ensures that specs are passing and production requirements are met
-2. Second creates an image ready for production and put it into registry
+2. Second creates an image ready for production and puts it into registry
 
 #### Application build
 
