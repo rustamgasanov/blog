@@ -75,7 +75,7 @@ As a security measures, we are going to setup [`HTTP Basic Auth`](https://en.wik
 
 ### Prepare HTTP Basic Auth
 
-Let's install `apache2-utils` package, which contain `htpasswd` utility:
+Let's install `apache2-utils` package, which contains `htpasswd` utility:
 
 ```
 $ sudo apt-get -y install apache2-utils
