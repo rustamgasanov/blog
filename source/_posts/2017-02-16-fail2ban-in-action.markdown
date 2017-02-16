@@ -22,7 +22,7 @@ $ journalctl --since "2017-02-15 11:50:00"
 
 {% img /images/fail2ban_1.png %}
 
-Well, it is a nasty situation. Putting all those ips to `iptables` manually would be painful and would require to check journal every day for new attacker's ip entries every day. Fortunately, this task is easily solvable with `fail2ban` utility.
+Well, it is a nasty situation. Putting all those ips to `iptables` manually would be painful and would require to check the journal every day for new attacker's ip entries. Fortunately, this task is easily solvable with `fail2ban` utility.
 
 ```
 $ apt-get install fail2ban
