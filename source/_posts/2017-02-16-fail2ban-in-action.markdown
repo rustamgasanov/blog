@@ -12,7 +12,7 @@ categories:
   - iptables
 ---
 
-Just checked the journal of my server and discovered it's under(luckily unsuccessful) attack for quite a period of time. Quick check through the journal revealed numerous ssh login attempts:
+Just checked the journal of my server and discovered it's under(luckily unsuccessful) attack for quite a period of time. Quick check through the journal has revealed numerous ssh login attempts:
 
 <!-- more -->
 
