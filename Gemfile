@@ -1,9 +1,9 @@
 source "https://rubygems.org"
 
 group :development do
-  gem 'rake', '~> 10.0'
-  gem 'jekyll', '~> 2.0'
-  gem 'octopress-hooks', '~> 2.2'
+  gem 'rake'
+  gem 'jekyll'
+  gem 'octopress-hooks'
   gem 'octopress-date-format', '~> 2.0'
   gem 'jekyll-sitemap'
   gem 'rdiscount', '~> 2.0'
